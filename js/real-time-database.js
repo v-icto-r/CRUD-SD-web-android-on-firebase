@@ -1,6 +1,4 @@
 var TrabSDList = document.getElementById('TrabSDList');
-var UserNameInput = document.getElementById('UserNameInput');
-var SenhaInput = document.getElementById('SenhaInput');
 var AutorNameInput = document.getElementById('AutorNameInput');
 var TrabNameInput = document.getElementById('TrabNameInput');
 var LingProgInput = document.getElementById('LingProgInput');
@@ -8,15 +6,13 @@ var EndGithubInput = document.getElementById('EndGithubInput');
 var addButton = document.getElementById('addButton');
 
 //Ao Clicar no botão
-addButton.addEventListener('click', function(){
-    create(UserNameInput.value, SenhaInput.value, AutorNameInput.value, TrabNameInput.value, LingProgInput.value, EndGithubInput.value);
+addButton.addEventListener('click', function () {
+    create(AutorNameInput.value, TrabNameInput.value, LingProgInput.value, EndGithubInput.value);
 });
 
-function create(UserName, Senha, AutorName, TrabName, LingProg, EndGithub){
-    
+function create(AutorName, TrabName, LingProg, EndGithub) {
+
     var data = {
-        UserName: UserName,
-        Senha: Senha,
         AutorName: AutorName,
         TrabName: TrabName,
         LingProg: LingProg,
@@ -26,11 +22,11 @@ function create(UserName, Senha, AutorName, TrabName, LingProg, EndGithub){
     return firebase.database().ref().child('TrabSD').push(data);
 }
 
-firebase.database().ref('TrabSD').on('value', function(snapshot){
-    TrabSDList.innerHTML = '';
+firebase.database().ref('TrabSD').on('value', function (snapshot) {
+    TrabSDList.innerHTML = '  ';
     snapshot.forEach(function (item) {
         var li = document.createElement('li');
-        li.appendChild(document.createTextNode(item.val().UserName + ': ' + item.val().Senha + ': ' + item.val().AutorName + ': ' + item.val().TrabName + ': ' + item.val().LingProg + ': ' + item.val().EndGithub));
+        li.appendChild(document.createTextNode('Autor: ' + item.val().AutorName + ' --> Titulo do Trabalho : ' + item.val().TrabName + ' --> Linguagem de Programação : ' + item.val().LingProg + ' --> Endereço do Github: ' + item.val().EndGithub));
         TrabSDList.appendChild(li);
     });
 });
